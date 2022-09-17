@@ -1,0 +1,56 @@
+docker build .   # build an image from a Docker file
+
+docker run -p 3000:80 <container id> # run nodejs server
+
+docker run <container id> #dont need any port app
+
+docker start <container name> #restart container
+
+docker stop <container name> #stop container
+
+docker ps #see running container
+
+docker ps -a #see all containers
+
+docker images #see all images 
+
+docker <option> --help # get help of particular option
+
+# attach and deattached container
+
+docker run -p 8000:80 -d <image id> #container will run background
+docker start --attach <container name> #start attached mode will run foreground
+
+#deleting images and containers
+
+docker rmi <image name or id> # remove image, note -> container remove first and then image which is used by container
+docker rm <container name or id> # remove container
+docker image prune # remove all images which are not being used in running container (remove all unused images)
+
+# interactive mode
+docker run -it <image id> #interactive mode with terminal eg. you can see logs which defined by you
+docker start -a <container name> #interactive mode eg. you can see logs which defined by you
+docker start -a	-i <container name> #interactive mode eg. you can see logs which defined by you
+
+# remove stopped containers automatically
+docker run -p 3000:80 -d --rm <image id> #automatically remove the container when its exits
+docker image prune -a # remove all images include tag images
+
+#docker inspect
+docker image inspect <image id> #details of image
+
+#naming and tagging images and containers
+-> when rename an image it create clone of that image not overide that image
+docker run -p 3000:80 -d --rm --name <name> <image id> # container name
+docker build -t <name>:<tag> . # image name with tag
+docker run -p 3000:80 -d --rm --name <name> <image name:image tag> #also run with this command of using image id in the place of image name and tag
+docker tag <image id or image name> <image name>:<tag> #rename image tage after build
+
+#sharing/pulling images from docker hun
+-> it will push only extra code not entire image, and other os and node image will take automatically which is save extra memory
+-> we have to way to share image with Dockerfile and share a built image
+docker login #authenticate to pull and push docker hub
+docker push <image name> # for sharing
+docker pull <repo name> # for using
+docker run <image name/repo> #docker find image locally if not found then it will pull the image from docker hub automatically
+docker tag fdae0d716103 meetkumarvishwakarma/first-node-app #eg. rename with same as docker hub repo
