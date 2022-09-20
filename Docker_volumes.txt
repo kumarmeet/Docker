@@ -1,0 +1,37 @@
+#docker volumes has two types named and anonymous
+#anonymous volumes exits until container exists
+#named volumes will survived if container remove, the folders on your hard drive will survive. It is great for data which should be persistent but which you dont need to edit directly
+
+volumes are managed by docker
+
+docker volume --help
+
+docker volume ls # to show volumes
+
+#named volumes  
+# -v <volume name>:<path>
+docker run -d -p 3000:80 --rm  --name feedback -v feedback-vol:/app/feedback feedback:volume
+
+#then removes container and re run the new container with same volume name then data will persists
+
+Removing Anonymous Volumes
+
+We saw, that anonymous volumes are removed automatically, when a container is removed.
+
+This happens when you start / run a container with the --rm option.
+
+If you start a container without that option, the anonymous volume would NOT be removed, even if you remove the container (with docker rm ...).
+
+Still, if you then re-create and re-run the container (i.e. you run docker run ... again), a new anonymous volume will be created. So even though the anonymous volume wasn't removed automatically, it'll also not be helpful because a different anonymous volume is attached the next time the container starts (i.e. you removed the old container and run a new one).
+
+Now you just start piling up a bunch of unused anonymous volumes - you can clear them via docker volume rm VOL_NAME or docker volume prune.
+
+# bind mounts
+bind mount concept in docker to overcome again and again rebuild the image if we something change into the souce code
+
+volumes are managed by docker in somewhere in the container we dont know but with bind mount we know because developer set the path should be mapped on the host machine
+
+bind mounts are perfect for persisted and editable data
+
+docker run -d --rm -p 3000:80 --name feedback-app -v feedback:/app/feedback -v "H:\Docker\data-volumes-02-added-dockerfile:/app" -v /app/node_modules feedback:volume .
+
