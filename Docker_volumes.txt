@@ -35,4 +35,12 @@ bind mounts are perfect for persisted and editable data
 
 docker run -d --rm -p 3000:80 --name node-mount -v feedback-data:/app/feedback -v "/home/meetkumar/Desktop/docker/data-volumes-03-adj-node-code:/app" -v /app/node_modules node:v
 
+# read only (:ro)
+docker run -d -p 3000:80 --rm --name docvol -v feedback:/app/feedback -v "/home/meet/DOCKER/data-volumes-02-added-dockerfile:/app:ro" -v /app/node_modules node:vol
+
+# .set env (--env-file ./.env for setting .env file) or (--env PORT=8000 for set through command line when config and run the container)
+docker run -d -p 3000:80 --env-file ./.env  --rm --name docvol -v feedback:/app/feedback -v "/home/meet/DOCKER/data-volumes-02-added-dockerfile:/app" -v /app/node_modules node:vol
+
+
+
 
