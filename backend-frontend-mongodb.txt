@@ -1,0 +1,34 @@
+#backend
+docker build -t goals-backend .
+docker run --name goals-nod --rm -d -p 8080:8080 goals-backend
+
+#host.docker.internal (let docker handle the domain of mongodb conatiner)
+mongoose.connect(
+  "mongodb://host.docker.internal:27017/course-goals",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) {
+      console.error("FAILED TO CONNECT TO MONGODB");
+      console.error(err);
+    } else {
+      console.log("CONNECTED TO MONGODB");
+      app.listen(8080);
+    }
+  }
+);
+
+
+#front-end 
+docker build -t goal-react .
+docker run --name react --rm -p 3000:3000  -it  goal-react
+
+
+#mongodb
+docker run --name mongodb -d --rm -p 27017:27017  mongo:4.2
+
+
+#-p (for setting port to expose the container to use host machine)
+in all commands for creation of containers because we use these container in our host machine (outside the container)
